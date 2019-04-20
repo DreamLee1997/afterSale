@@ -1,0 +1,55 @@
+@import "./../../style/default.less";
+.header{
+    background-color: @colorM;
+    .header-top{
+        background-color: #fff;
+        height: 60px;
+        line-height: 60px;
+        padding: 0 20px;
+        text-align: right;
+        .welcome{
+            margin-left: 5px;
+        }
+        .Icon{
+            margin-left: 20px;
+        }
+    }
+    .breadcrumb{
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        border-top: 1px solid #001529;
+        .breadcrumb-title{
+            text-align: center;
+            font-size: @fontC;
+            //通过定义一个伪类after
+            &:after{
+                position: absolute;
+                content: '';
+                left: 89px;
+                top: 39px;
+                border-top: 9px solid @colorM;
+                //border-left和border-right换成透明色 才能形成三角形 不然是长方形
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+                //background-color: red;
+            }
+        }
+        .weather{
+            text-align: right;
+            .date{
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+            .weather-detail{
+                margin-left: 5px;
+                vertical-align: middle;
+            }
+            .weather-img{
+                img{
+                    height: 15px;
+                }
+            }
+        }
+    }
+}
