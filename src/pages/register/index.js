@@ -1,3 +1,4 @@
+/* 注册页面 该功能同 忘记密码组件一样 */
 import React,{Component} from 'react'
 import {Button,Form,Input,Icon,message} from 'antd'
 import './index.less'
@@ -8,6 +9,7 @@ const FormItem = Form.Item;
 
 class Register extends Component{
 
+    
     handleSubmit = ()=>{
         let history = this.props.history;
         let userInfo = this.props.form.getFieldsValue();

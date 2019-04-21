@@ -1,3 +1,4 @@
+/*系统管理员的左侧导航栏 */
 import React,{Component} from 'react'
 import { Menu} from 'antd';
 import MenuConfig from '../../config/menuAdmin'
@@ -12,6 +13,7 @@ class NavLeft extends Component{
     state = {
         currentKey:''
     }
+    
     handleClick = ({item,key}) =>{
         //2、通过connect连接后 获取dispatch
         const {dispatch} = this.props;

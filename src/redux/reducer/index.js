@@ -1,6 +1,6 @@
+/*Reducer 数据处理*/
 import { type } from "../action";
-
-/*Reducer 数据处理*/ 
+ 
 const initialState = {
     menuName:'首页',
     token:'',

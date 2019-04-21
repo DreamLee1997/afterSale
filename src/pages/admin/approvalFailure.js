@@ -1,3 +1,4 @@
+/* 系统管理员查看 审批未通过 的申请单 */
 import React from 'react';
 import {Card, Table,Button,Form,Input} from 'antd'
 import axios from '../../axios/index';
@@ -16,22 +17,13 @@ class ApprovalFailure extends React.Component {
 
      //动态获取数据
      request = () => {
-        
-        // let _this = this;
-
-        // axios.get("http://xxx.com/xxx/xxx/xxx?",{
-        //     params:{id:this.kemuid},
-        //     headers:{token:Cookies.get('token'), platform: 'web'}
-        // }).then((res)=>{
-        //     console.log(res)
-        // })
         axios.ajax_get('/Application/checkApplication?step=2').then(res => {
            
            
             if (res.data.code === 200) {
                 
                 res.data.rows.map((item,index)=>{
-                    item.key = index
+                   return item.key = index
                 });
                 console.log( res.data.rows)
                 // res.data.rows.filter()            
@@ -43,13 +35,14 @@ class ApprovalFailure extends React.Component {
             }
         })
     };
-     // 根据工程名称模糊搜索
+    
+    // 根据工程名称模糊搜索
     handleSearch = () =>{
         let searchName = this.props.form.getFieldsValue().searchName;
             // console.log(searchName)
             axios.ajax_get(`/Application/checkApplication?name=${String(searchName)}`).then(res => {      
                 if (res.data.code === 200) {             
-                    var dataSource1 = res.data.rows.filter(item => item.step===2 )      
+                    var dataSource1 = res.data.rows.filter(item =>{return item.step===2}  )      
                     this.setState({//页面刷新,不保留选中字段
                         dataSource2: dataSource1
                         // selectedRowKeys:[],

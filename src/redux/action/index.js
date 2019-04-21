@@ -1,4 +1,4 @@
-
+/* 封装 action */
 // 1.定义事件类型
 export const type = {
     SWITCH_MENE:'SWITCH_MENE',

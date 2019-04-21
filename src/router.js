@@ -1,3 +1,4 @@
+/* 封装所有路由组件 */
 import React,{Component} from 'react'
 import {HashRouter,Route,Switch,Redirect} from 'react-router-dom'
 import App from './App'
@@ -16,11 +17,11 @@ import ApprovalSuccess from './pages/admin/approveSuccess'
 import ApprovalWaiting from './pages/admin/approvalWaiting'
 import ApprovalFailure from './pages/admin/approvalFailure'
 import ApprovalWaiting1 from './pages/userAdmin/approvalWaiting'
-import ApprovalFinsh from './pages/userAdmin/aprovalFinsh'
+import ApprovalFinsh from './pages/userAdmin/approvalFinsh'
 
 import userAdminWatchApplication from './pages/userAdmin/watchApplication'
 
-//一下引入的组件时自己联系的小demo
+//一下引入的组件是自己练习的小demo
 import Buttons from './pages/ui/button'
 import Modals from './pages/ui/modals'
 import Loadings from './pages/ui/loadings'
@@ -41,7 +42,7 @@ export default class IRouter extends Component{
                         <Route  path="/admin" render={()=>
                             <Admin>
                                 <Switch>
-                                    <Route path="/admin/home" component={SeviceCharge}></Route>
+                                    <Route path="/admin/home" component={Messages} ></Route>
                                     <Route path="/admin/userManage" component={UserManager}></Route>
                                     <Route path="/admin/approvalManage/watch" component={adminWatchApplication}></Route>
                                     <Route path="/admin/approvalManage/waiting" component={ApprovalWaiting}></Route>

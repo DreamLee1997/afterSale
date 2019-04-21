@@ -1,3 +1,4 @@
+/* 售后人员填写 服务费明细 的组件 */
 import React from "react";
 import "antd/dist/antd.css";
 import data from "./dataList";
@@ -39,6 +40,7 @@ class EditableCell extends React.Component {
 
 class Client extends React.Component {
 
+  //初始化数据
   constructor(props) {
     super(props);
     
@@ -317,14 +319,6 @@ class Client extends React.Component {
     this.props.getChildDatas(getChildDatas);
   }
 
-//   getItemsValue = (form)=>{    //3、自定义方法，用来传递数据（需要在父组件中调用获取数据）
-    
-//     console.log(form)
-//     const values= form.getFieldsValue();       //4、getFieldsValue：获取一组输入控件的值，如不传入参数，则获取全部组件的值
-//     return values;
-// }
-
-
   //添加新的一行
   addRow = () => {
     let { data } = this.state;
@@ -354,16 +348,9 @@ class Client extends React.Component {
       if (error) {
         return;
       }
-      // values.title = values.title === "1" ? '1' : (values.title === "1" ? '2' :(values.title === "3" ? '3' :(values.title === "4" ? '4' :(values.title === "5" ? '5':(values.title === "6" ? '6' :(values.title === "7" ? '7':'8'))))))
-      // values.title = values.title == "1" ? '车辆租赁费' : (values.title == "2" ? '工具燃料费' :(values.title == "3" ? '人工雇佣费' :(values.title == "4" ? '人工雇佣费' :
-      // (values.title == "5" ? '损耗费':(values.title == "6" ? '服务外包费':(values.title == "7" ? '履约联络费':'维修费'))))))
-      // values.evaluate = values.evaluate == "1" ? true : false;
-      // console.log( values.title );
-      // console.log(values)
       values.unit= values.title==='车辆租赁费'?'元/车天':(values.title==='工具燃料费'?'元':(values.title==='人工雇佣费'?'元/人天':(values.title==='工具租赁费'?'元/天':(values.title==='损耗费'?'元/公里':(values.title==='服务外包费'?'元/基':(values.title==='履约联络费'?'元/天':'元'))))))
       values.total = values.price*values.days*values.number;
       let updateData = { ...record, ...values };
-
       // console.log(updateData)
       setTimeout(res => {
         updateData.type = "view";
@@ -377,16 +364,7 @@ class Client extends React.Component {
   }
 
   edit(form,record) {
-    console.log(record.title)
-    // record.title = record.title === "1" ? '车辆租赁费' : (record.title === "2" ? '工具燃料费' :(record.title === "3" ? '人工雇佣费' :(record.title === "4" ? '工具租赁费' :
-    // (record.title === "5" ? '损耗费':(record.title === "6" ? '服务外包费':(record.title === "7" ? '履约联络费':'维修费'))))))
-    // record.title = form.getFieldValue.title
-    // console.log(record.title)
-    // record.unit= record.title==='1'?'元/车天':(record.title==='2'?'元':(record.title==='3'?'元/人天':(record.title==='4'?'元/天':(record.title==='5'?'元/公里':(record.title==='6'?'元/基':(record.title==='7'?'元/天':'元'))))))
-    // record.unit= record.title === "1" ? '车辆租赁费' : (record.title === "2" ? '工具燃料费' :(record.title === "3" ? '人工雇佣费' :(record.title === "4" ? '工具租赁费' :
-    // (record.title === "5" ? '损耗费':(record.title === "6" ? '服务外包费':(record.title === "7" ? '履约联络费':'维修费'))))))
-    console.log(record.unit)
-    console.log(record)
+    // console.log(record)
     let { data } = this.state;
     let newData = data.filter(item => {
       if (item.id === record.id) {
@@ -404,20 +382,12 @@ class Client extends React.Component {
   //确认编辑
   editSubmit(form, record) {
     let { data } = this.state;
-    // let userInfo = form.getFieldsValue();
-    // console.log(userInfo)
-    // console.log(record)
     form.validateFields((error, values) => {
       if (error) {
         return;
-      }
-      // values.title = values.title == "1" ? '车辆租赁费' : (values.title == "2" ? '工具燃料费' :(values.title == "3" ? '人工雇佣费' :(values.title == "4" ? '工具租赁费' :
-      // (values.title == "5" ? '损耗费':(values.title == "6" ? '服务外包费':(values.title == "7" ? '履约联络费':'维修费'))))))
+      } 
       values.unit= values.title==='车辆租赁费'?'元/车天':(values.title==='工具燃料费'?'元':(values.title==='人工雇佣费'?'元/人天':(values.title==='工具租赁费'?'元/天':(values.title==='损耗费'?'元/公里':(values.title==='服务外包费'?'元/基':(values.title==='履约联络费'?'元/天':'元'))))))
-      // values.title = values.title === "1" ? 1 : (values.title === "2" ? 2 :(values.title === "3" ? 3 :(values.title === "4" ? 4 :(values.title === "5" ? 5 :(values.title === "6" ? 6 :(values.title === "7" ? 7 :8))))))
-      // values.title = values.title === "1" ? '1' : (values.title === "2" ? '2' :(values.title === "3" ? '3' :(values.title === "4" ?'4 ' :(values.title === "5" ? '5' :(values.title === "6" ? '6' :(values.title === "7" ? '7' :'8'))))))
-      // values.evaluate = values.evaluate == "1" ? true : false;
-      
+ 
       values.total = values.price*values.days*values.number;
       // console.log(values.unit)
       let updateData = { ...record, ...values };
@@ -451,6 +421,7 @@ class Client extends React.Component {
     editRow.type = "view";
     this.updateDataSource(data);
   }
+  //删除
   delete(record) {
     let { data } = this.state;
     // console.log(record);

@@ -1,12 +1,20 @@
+
+/* 审批管理人员 待审批 组件 
+引入WatchDetial组件
+*/
+
 import React from 'react';
 import {Card, Table, Button,Form,Input, message} from 'antd'
 import axios from '../../axios/index';
+import WatchDetial from './watchDetial'
 const FormItem = Form.Item;
 
 class ApprovalWaiting extends React.Component {
     state = {
         dataSource2: [],
-
+        priseDetail:[],
+        visible:false,
+        oneId:0
     }
 
     componentDidMount() {
@@ -19,7 +27,7 @@ class ApprovalWaiting extends React.Component {
         axios.ajax_get('/Application/checkApplication?step=1').then(res => {
             if (res.data.code === 200) {   
                 res.data.rows.map((item,index)=>{
-                    item.key = index
+                    return item.key = index
                 });
                 console.log(res.data.rows)
                 // res.data.rows.filter() 
@@ -32,25 +40,25 @@ class ApprovalWaiting extends React.Component {
         })
     };
     //关键字搜索
+
     handleSearch = () =>{
         let search = this.props.form.getFieldsValue();
         console.log(search)
             var params
             if(search.searchName===''&& search.budgetTotalUpper===''&& search.budgetTotalLower==='') {
                 message.error("请输入搜索信息！")
-            }
-            else if(search.searchName===''&&search.budgetTotalUpper===''){
+            }else if(search.searchName===''&&search.budgetTotalUpper===''){
                 params = {
-                    budgetTotalUpper:parseInt(search.budgetTotalLower)
+                    budgetTotalUpper:parseInt(search.budgetTotalLower,0)
                 }
             }else if(search.searchName===''&&search.budgetTotalLower===''){
                 params = {
-                    budgetTotalUpper:parseInt(search.budgetTotalUpper)
+                    budgetTotalUpper:parseInt(search.budgetTotalUpper,0)
                 }
             }else if(search.searchName===''){
                 params = {
-                    budgetTotalLower:parseInt(search.budgetTotalLower),
-                    budgetTotalUpper:parseInt(search.budgetTotalUpper)
+                    budgetTotalLower:parseInt(search.budgetTotalLower,0),
+                    budgetTotalUpper:parseInt(search.budgetTotalUpper,0)
                 }
             }else if(search.budgetTotalUpper===''&& search.budgetTotalLower===''){
                 params = {
@@ -59,18 +67,18 @@ class ApprovalWaiting extends React.Component {
             }else if(search.budgetTotalLower===''){
                 params = {
                     name:search.searchName,
-                    budgetTotalUpper:parseInt(search.budgetTotalUpper)
+                    budgetTotalUpper:parseInt(search.budgetTotalUpper,0)
                 }
             }else if(search.budgetTotalUpper===''){
                 params = {
-                    budgetTotalLower:parseInt(search.budgetTotalLower),
+                    budgetTotalLower:parseInt(search.budgetTotalLower,0),
                     name:search.searchName,
                 }
             }else{
                 params = {
-                    budgetTotalLower:parseInt(search.budgetTotalLower),
+                    budgetTotalLower:parseInt(search.budgetTotalLower,0),
                     name:search.searchName,
-                    budgetTotalUpper:parseInt(search.budgetTotalUpper)
+                    budgetTotalUpper:parseInt(search.budgetTotalUpper,0)
                 }
             }
            
@@ -89,13 +97,28 @@ class ApprovalWaiting extends React.Component {
     }
    
     //详细信息
-    handleDetial = () =>{
-        alert(111)
+    handleDetial = (value) =>{
+        // console.log(JSON.parse(value))
+        let details = JSON.parse(value).details;
+        details.map((item,index)=>{
+            return item.key = index
+        })
+        this.setState({
+            priseDetail:details,
+            visible:true,
+            oneId:JSON.parse(value).id,
+        })
+    }
+ 
+    /*获取子组件传递过来的值*/
+    changeStatus = (status) =>{
+        this.setState({
+        visible:status,
+        })
+        this.request();
     }
 
-
     render() {
-        //  const text = '确定指定此人为该用户的的上级领导吗?';
         const {getFieldDecorator} = this.props.form;
         const columns=[
         {
@@ -116,6 +139,29 @@ class ApprovalWaiting extends React.Component {
         {
             title: '施工单位',
             dataIndex: 'address'
+        },
+        {
+            title: '缺陷等级',
+            dataIndex: 'defectLevel',
+            render(state){
+                let config = {
+                    '1':'一般缺陷',
+                    '2':'较大缺陷',                   
+                    '3':'严重缺陷',                   
+                };
+                return config[state];
+            }
+        },
+        {
+            title: '是否组装',
+            dataIndex: 'install',
+            render(state){
+                let config = {
+                    '0':'未组装',
+                    '1':'组装',                   
+                };
+                return config[state];
+            }
         },
         {
             title: '预算总金额',
@@ -146,7 +192,7 @@ class ApprovalWaiting extends React.Component {
                 // console.log(text, item, index)
                 return (
                     <div>
-                        <Button title="详细信息" value={ JSON.stringify(item) } icon="search"  theme="twoTone"  size='small' onClick={(item)=> {this.handleDetial(item.target.value)} }></Button>
+                        <Button title="详细信息" value={ JSON.stringify(item) } icon="edit"  theme="twoTone"  size='small' onClick={(item)=> {this.handleDetial(item.target.value)} }></Button>
                     </div>
                 )
             }
@@ -200,8 +246,14 @@ class ApprovalWaiting extends React.Component {
                         pagination={false}       
                     />
                 </Card>
-                  
+                < WatchDetial 
+                    id = {this.state.oneId}
+                    visible={this.state.visible}
+                    entray={this.state.priseDetail}
+                    status={this.changeStatus}
+                />            
             </div>
+            
         );
     }
 }

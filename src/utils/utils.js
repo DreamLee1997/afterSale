@@ -1,4 +1,5 @@
 export default {
+    /* 首页headers上的时间的封装 */
     formateDate(time){
         if(!time) return '';
         let date = new Date(time);

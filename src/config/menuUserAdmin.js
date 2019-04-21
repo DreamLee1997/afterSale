@@ -1,3 +1,4 @@
+/* 审批管理人员左侧导航栏菜单 */
 const menuList = [
     {
         title:'首页',

@@ -1,7 +1,7 @@
+/* 系统管理员查看 待审批 的申请单 */
 import React from 'react';
 import {Card, Table,Button,Form,Input} from 'antd'
 import axios from '../../axios/index';
-
 const FormItem = Form.Item;
 // const Option = Select.Option;
 class ApprovalWaiting extends React.Component {

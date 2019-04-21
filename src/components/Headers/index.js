@@ -1,3 +1,4 @@
+/* 页面headers */
 import React,{Component} from 'react'
 import { Row,Col,Icon} from 'antd';
 import './index.less'
@@ -22,31 +23,7 @@ class Header extends Component{
         },1000)
         // this.getWeatherAPIData();
     }
-/*
-    getWeatherAPIData(){
-        let city = '杭州'
-        axios.jsonp({
-            url:'http://api.map.baidu.com/telematics/v3/weather?location='+encodeURIComponent(city)+'&output=json&ak=3p49MVra6urFRGOT9s8UBWr2'
-        }).then((res)=>{
-            // debugger;
-            if(res.status === 'success'){
-                let data = res.results[0].weather_data[0];
-                this.setState({
-                    dayPictureUrl:data.dayPictureUrl,
-                    weather:data.weather
-                })
-            }
-        })
-        <span className="weather-img">
-                            <img src={this.state.dayPictureUrl} alt=""/>
-                        </span>
-                        <span className="weather-detail">
-                            {this.state.weather}
-                        </span>
-    }
-
-    */
-
+    //退出页面 回到首页
     handleBack (item){
         // let history = this.props.history;
         console.log(this.props.history)

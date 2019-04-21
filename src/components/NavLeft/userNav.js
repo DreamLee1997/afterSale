@@ -1,3 +1,4 @@
+/*普通售后人员的左侧导航栏 */
 import React,{Component} from 'react'
 import { Menu} from 'antd';
 import MenuConfig from '../../config/menuUser'

@@ -1,3 +1,4 @@
+/* 编辑 系统管理员 的信息 */
 import React from 'react';
 import {Modal,Input,Select, Button,message,Form,Popconfirm} from 'antd'
 import axios from '../../axios/index';
@@ -20,11 +21,11 @@ class EditAdmin extends React.Component {
             state:NumState ,
             email:userInfo.adminEmail
         }
-        console.log(formData)
+        // console.log(formData)
         axios.ajax_put('/User/updateUser',formData
         ).then(res => {
             if(res.data.code === 200){
-                console.log(333)
+                // console.log(333)
                 this.props.status(false)
                 message.success('恭喜你，修改信息成功!')
             }       

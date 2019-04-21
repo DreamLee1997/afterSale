@@ -1,9 +1,10 @@
+/* 编辑 审批管理人员 的信息 */
 import React from 'react';
 import {Modal,Input,Select, Button,message,Form,Popconfirm} from 'antd'
 import axios from '../../axios/index';
 
 const FormItem = Form.Item;
-const option = Select.Option;
+// const option = Select.Option;
 
 class EditUserAdmin extends React.Component {
 
@@ -12,15 +13,12 @@ class EditUserAdmin extends React.Component {
         this.props.status(status);
     }
 
-     //点击提交按钮 调用接口
+    //点击提交按钮 调用接口
     onConfirm = () => {
         //getFieldsValue是object对象，form的一个方法，用于获取表单下所有的值
         let userInfo = this.props.form.getFieldsValue();
         let NumRole = (userInfo.userAdminRole==="系统管理人员")? 1:((userInfo.userAdminRole==="管理人员")? 2:3)
         let NumState = (userInfo.userState==="通过注册")? 1:((userInfo.userState==="注册未通过")? 0:-1)
-        let NumS
-        // console.log(NumRole)
-        // console.log(userInfo)
         const formData = {
             id:userInfo.userAdminId,
             role:NumRole,
@@ -38,7 +36,7 @@ class EditUserAdmin extends React.Component {
             axios.ajax_put('/User/updateUser',formData
             ).then(res => {
                 if(res.data.code === 200){
-                    console.log(222)
+                    // console.log(222)
                     let status = false;
                     this.props.status(status);
                     message.success('恭喜你，修改信息成功!')

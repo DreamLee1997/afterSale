@@ -1,3 +1,4 @@
+/* 系统管理员下 管理人员的组件 */
 import React from 'react';
 import {Card, Table, Modal,Button,Form,Popconfirm,Select,Input} from 'antd'
 import axios from './../../axios/index';
@@ -124,14 +125,17 @@ class UserManager extends React.Component {
         }
     })
 
+    //指定上级领导
     handleAssign = (value1) =>{
+        alert("指定上级领导，未完待续。。。")
         this.setState({
             visible:true
         })
 
-        console.log(value1)
+        // console.log(value1)
     }
 
+    //取消“指定上级领导”modal框
     onCancel = () =>{
         this.setState({
             visible:false
@@ -139,7 +143,7 @@ class UserManager extends React.Component {
         // console.log(this.props.status)
     }
 
-    /*获取子组件传递过来的值*/
+    /*获取子组件 EditAdmin EditUserAdmin EditUser传递过来的值*/
     changeStatus = (status) =>{
         this.setState({
         visible1:status,

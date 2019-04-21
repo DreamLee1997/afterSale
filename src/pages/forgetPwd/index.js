@@ -1,3 +1,4 @@
+/* 忘记密码的功 能暂时还未完善 先把必要功能做很好 最后晚上细节 */
 import React,{Component} from 'react'
 import {Button,Form,Input,Icon,message} from 'antd'
 

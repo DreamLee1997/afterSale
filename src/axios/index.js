@@ -1,38 +1,7 @@
-// import React,{Component} from 'react'
+/*所有axios方法 调用接口 的封装组件 */
 import JsonP from 'jsonp'
 import axios from 'axios'
-console.log(122324)
-// import axiosrequest from './request'
-// import {Modal} from 'antd'
-// var storage=window.localStorage;
-// axiosrequest.request()
-// http request拦截器 添加一个请求拦截器
-// axios.interceptors.request.use(function (config) {
-//     let token = this.props.token;
-//     console.log(token);
-//     axios.defaults.headers.common['accessToken'] = token;
-//     if (token) {
-//         config.withCredentials = true
-//         config.headers = {
-//             accessToken:token
-//         }    //将token放到请求头发送给服务器
-//         return config;
-//         //这里经常搭配token使用，将token值配置到tokenkey中，将tokenkey放在请求头中
-//         // config.headers['accessToken'] = Token;
-//     }}, function (error) {
-//         // Do something with request error
-//         return Promise.reject(error);
-// })
 
-
-// // 添加一个响应拦截器
-// axios.interceptors.response.use(function (response) {
-//     // Do something with response data
-//     return response;
-// }, function (error) {
-//     // Do something with response error
-//     return Promise.reject(error);
-// });
 const baseApi = 'http://10.11.35.167:8080/zjsdtt'
 export default class Axios{
     //options 传一个大对象

@@ -1,9 +1,7 @@
+/* 项目的入口文件 已经封装好了redux */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
-// import Life from './pages/demo/Life'
-// import Admin from './admin'
 import Router from './router'
 import { Provider } from 'react-redux'
 import configureStore from './redux/store/configureStore'

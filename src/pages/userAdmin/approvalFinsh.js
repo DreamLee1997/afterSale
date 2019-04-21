@@ -1,16 +1,13 @@
-/*审批管理人员 查看申请*/ 
+/* 审批管理人员 审批完成 组件 */
 import React from 'react';
-import {Card, Table, Button,Form,Input, message,Modal} from 'antd'
+import {Card, Table, Button,Form,Input, message} from 'antd'
 import axios from '../../axios/index';
 const FormItem = Form.Item;
 
-class WatchApplication extends React.Component {
+class ApprovalFinsh extends React.Component {
     state = {
         dataSource2: [],
-        dataSource1:[],
-        visible:false,
-        budgetTotal:0,
-        actualTotal:0,
+
     }
 
     componentDidMount() {
@@ -19,28 +16,25 @@ class WatchApplication extends React.Component {
 
      //动态获取数据
      request = () => {
-        //let _this = this;
-        axios.ajax_get('/Application/checkApplication').then(res => {          
-            if(res.data.code === 200) { 
-                res.data.rows.map((item,index)=>{
-                    return item.key = index
-                });
-                console.log(res.data.rows)
-                // res.data.rows.filter()               
+        // let _this = this;
+        axios.ajax_get('/Application/checkApplication').then(res => {
+           
+           
+            if (res.data.code === 200) {
+                var dataSource1 = res.data.rows.filter(item => { return item.step===2||item.step ===3  })   
+                // console.log(dataSource1)
                 this.setState({//页面刷新,不保留选中字段
-                    dataSource2: res.data.rows,
+                    dataSource2: dataSource1
                     // selectedRowKeys:[],
                     // selectedRows:null,
-
                 });              
             }
         })
     };
-
-    //按关键词搜索申请单
+    //搜索用户
     handleSearch = () =>{
         let search = this.props.form.getFieldsValue();
-        // console.log(search)
+        console.log(search)
             var params
             if(search.searchName===''&& search.budgetTotalUpper===''&& search.budgetTotalLower==='') {
                 message.error("请输入搜索信息！")
@@ -80,14 +74,19 @@ class WatchApplication extends React.Component {
                 }
             }
            
+            console.log(params)
             axios.ajax_get('/Application/checkApplication',params).then(res => {      
                 if (res.data.code === 200) {   
                     // console.log(res)
-                    res.data.rows.map((item,index)=>{
-                       return  item.key = index
-                    }); 
+                    var dataSource1 = res.data.rows.filter(item => {
+                        return item.step===2||item.step ===3
+                    })   
+                    console.log(dataSource1)
+                    // res.data.rows.map((item,index)=>{
+                    //     item.key = index
+                    // }); 
                     this.setState({//页面刷新,不保留选中字段
-                        dataSource2: res.data.rows
+                        dataSource2: dataSource1
                         // selectedRowKeys:[],
                         // selectedRows:null,
                     });              
@@ -95,66 +94,7 @@ class WatchApplication extends React.Component {
             })
     }
 
-    //查看详细信息
-    handleDetial = (value) =>{
-        console.log(JSON.parse(value).details)
-        
-        this.setState({
-            dataSource1:JSON.parse(value).details ,
-            visible:true,
-            budgetTotal:JSON.parse(value).budgetTotal,
-            actualTotal:JSON.parse(value).actualTotal,
-        })
-    }
-    //取消查看详细售后服务费的modal框
-    onCancel = () =>{
-        this.setState({
-            visible:false,
-        })
-    }
-
     render() {
-        const detailColumns=[
-            {
-                title: '金额类型',
-                dataIndex: 'budget',
-                render(state){
-                    let config = {
-                        '0':'实际金额',
-                        '1':'预算金额',                   
-                    };
-                    return config[state];
-                }
-            },
-            {
-                title: '费用名称',
-                dataIndex: 'title'
-            },
-            {
-                title: '数量',
-                dataIndex: 'number'
-            },
-            {
-                title: '天数',
-                dataIndex: 'days'
-            },
-            {
-                title: '核算单价',
-                dataIndex: 'price'
-            },
-            {
-                title: '单位',
-                dataIndex: 'unit'
-            },
-            {
-                title: '小计/元',
-                dataIndex: 'total',
-            },
-            {
-                title: '备注',
-                dataIndex: 'description'
-            },
-           ]
         //  const text = '确定指定此人为该用户的的上级领导吗?';
         const {getFieldDecorator} = this.props.form;
         const columns=[
@@ -176,29 +116,6 @@ class WatchApplication extends React.Component {
         {
             title: '施工单位',
             dataIndex: 'address'
-        },
-        {
-            title: '缺陷等级',
-            dataIndex: 'defectLevel',
-            render(state){
-                let config = {
-                    '1':'一般缺陷',
-                    '2':'较大缺陷',                   
-                    '3':'严重缺陷',                   
-                };
-                return config[state];
-            }
-        },
-        {
-            title: '是否组装',
-            dataIndex: 'install',
-            render(state){
-                let config = {
-                    '0':'未组装',
-                    '1':'组装',                   
-                };
-                return config[state];
-            }
         },
         {
             title: '预算总金额',
@@ -241,7 +158,7 @@ class WatchApplication extends React.Component {
             <div>
                 <Card  >
                     <Form layout="inline" >
-                        <FormItem label="工程名称"  style={{marginLeft:5}}>
+                    <FormItem label="工程名称"  style={{marginLeft:5}}>
                             {
                                 getFieldDecorator('searchName',{
                                     initialValue:'',
@@ -253,7 +170,6 @@ class WatchApplication extends React.Component {
                                 )
                             }
                         </FormItem>  
-                        
                         <FormItem style={{marginRight:3}} label="预算金额">
                             {
                                 getFieldDecorator('budgetTotalLower',{
@@ -284,30 +200,9 @@ class WatchApplication extends React.Component {
                         pagination={false}       
                     />
                 </Card>
-                <Modal
-                    mask={true}
-                    width={900}
-                    height={600}
-                    title="费用明细"
-                    visible={this.state.visible}
-                    onCancel={this.onCancel}
-                    footer={null}
-                >
-                    
-                    <Table
-                        columns={detailColumns}
-                        dataSource={this.state.dataSource1}
-                        pagination={false}       
-                    />
-                    <div style={{marginTop:15}}>
-                        <span style={{marginLeft:16,marginRight:30}}>预算总金额：{this.state.budgetTotal}</span>
-                        <span >实际总金额：{this.state.actualTotal}</span>
-                    </div>
-                    
-                </Modal>
                   
             </div>
         );
     }
 }
-export default Form.create()(WatchApplication);
+export default Form.create()(ApprovalFinsh);

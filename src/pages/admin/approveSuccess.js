@@ -1,3 +1,4 @@
+/* 系统管理员查看 审批通过 的申请单 */
 import React from 'react';
 import {Card, Table,Button,Form,Input} from 'antd'
 import axios from '../../axios/index';
@@ -23,7 +24,7 @@ class ApprovalSuccess extends React.Component {
             if (res.data.code === 200) {
                 
                 res.data.rows.map((item,index)=>{
-                    item.key = index
+                   return item.key = index
                 });
                 console.log( res.data.rows)
                 // res.data.rows.filter()       
@@ -41,7 +42,7 @@ class ApprovalSuccess extends React.Component {
             // console.log(searchName)
             axios.ajax_get(`/Application/checkApplication?name=${String(searchName)}`).then(res => {      
                 if (res.data.code === 200) {             
-                    var dataSource1 = res.data.rows.filter(item => item.step===3 )   
+                    var dataSource1 = res.data.rows.filter(item => {return item.step===3 })   
                     this.setState({//页面刷新,不保留选中字段
                         dataSource2: dataSource1
                         // selectedRowKeys:[],

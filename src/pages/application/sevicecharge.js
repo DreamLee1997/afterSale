@@ -1,19 +1,17 @@
+/* 售后人员的  售后申请表的填写 （引入子组件 Client ） */
 import React,{Component} from 'react'
 import {Card,Button,Form,Input,Upload,Icon,message,Popconfirm,DatePicker,Radio} from 'antd'
 import axios from '../../axios/index'
-// import axios from 'axios'
 import './sevicecharge.less'
 import data from './dataList'
 import {Client} from './detials'
-// import { Map } from 'core-js';
-// import { isMainThread } from 'worker_threads';
-const FormItem = Form.Item;
 
+const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 // const Option = Form.Option;
 
 class SeviceCharge extends Component{
-    
+    //初始化数据
     state = ({
         userImg:'',
         visible:false,
@@ -29,13 +27,14 @@ class SeviceCharge extends Component{
         this.updateDataSource(data.getList);
     }
 
+    //更新数据
     updateDataSource = (newData) => {
         this.setState({  
             data: newData
         });
     }  
     
-     
+    //获取组件的数据 传给父组件 
     getChildDatas = (getChildDatas) => {
         console.log(getChildDatas); 
         this.setState({
@@ -43,9 +42,10 @@ class SeviceCharge extends Component{
         })
     }
    
+    //提交申请表
     handleSubmit = ()=>{
         let userInfo = this.props.form.getFieldsValue();
-        console.log(JSON.stringify(userInfo))
+        // console.log(JSON.stringify(userInfo))
         const params={
             urgent:userInfo.urgent,
             name:userInfo.projectName,
@@ -54,8 +54,8 @@ class SeviceCharge extends Component{
             linkman:userInfo.relativeName,
             // deptName:userInfo.department,
             dealTime:userInfo.handleTime.getTime() ,
-            defectlevel:parseInt(userInfo.defectlevel),
-            install:parseInt(userInfo.isInstall),
+            defectlevel:parseInt(userInfo.defectlevel,0),
+            install:parseInt(userInfo.isInstall,0),
             description:userInfo.describe,
             // file:userInfo.serviceAddress,
             dealMethod:userInfo.processMethod,
@@ -78,6 +78,7 @@ class SeviceCharge extends Component{
     
     
   
+    //提交文件
     onSubmitFile = () =>{
         const { fileList } = this.state;
         const formData = new FormData();
@@ -314,7 +315,9 @@ class SeviceCharge extends Component{
                                     )
                                 }
                             </FormItem>   
+                            
                             <Client  getChildDatas = {this.getChildDatas }  />
+                            
                             <FormItem label="上传文件" style={formItemLayout} >
                                 {
                                     getFieldDecorator('userDirectory',{
@@ -337,7 +340,7 @@ class SeviceCharge extends Component{
                                     )
                                 }
                                 </FormItem>
-                                <FormItem 
+                            <FormItem 
                                         label="申请类型"
                                         style={formItemLayout} >
                                        
@@ -370,8 +373,6 @@ class SeviceCharge extends Component{
                                          
                                 </FormItem>                      
                         </Form>
-                
-                        
                 </Card>
                     
             </div>

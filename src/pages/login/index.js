@@ -1,3 +1,4 @@
+/* 登录页面 */
 import React,{Component} from 'react'
 import { Form,Input,Button,message,Icon,Checkbox} from 'antd'
 import { connect } from 'react-redux'
@@ -7,9 +8,10 @@ import './index.less'
 import axios1 from './../../axios/index'
 // import axios from 'axios'
 const FormItem = Form.Item;
-// var storage=window.localStorage;
+
 class Login extends Component{
     
+    //提交登录申请
     handleSubmit = () =>{
         let history = this.props.history;
         // console.log(history)
@@ -36,6 +38,7 @@ class Login extends Component{
                         const token1 = dispatch(getToken(res.data.result.accessToken))           
                         const axios = axios1.getobj()                      
                
+                        //添加拦截器 在请求头设置token
                         axios.interceptors.request.use(function (config) {
                             axios.defaults.headers.common['accessToken'] = token1.token;
                             if (token1) {

@@ -1,3 +1,4 @@
+/* 普通苹果售后人员 查看申请成功的 组件*/
 import React from 'react';
 import {Card, Table,Button,Form} from 'antd'
 import axios from '../../axios/index';
@@ -12,21 +13,15 @@ class ApplySuccess extends React.Component {
         this.request();//初始化调用数据
     }
 
-     //动态获取数据
      request = () => {
         // let _this = this;
-        axios.ajax_get('/Application/getApplicationByCons').then(res => {
-           
-           
-            if (res.data.code === 200) {
-                
+        axios.ajax_get('/Application/getApplicationByCons').then(res => { 
+            if (res.data.code === 200) { 
                 res.data.rows.map((item,index)=>{
-                    item.key = index
+                    return  item.key = index
                 });
                 console.log( res.data.rows)
-                // res.data.rows.filter()
-
-                
+                // res.data.rows.filter()             
                 this.setState({//页面刷新,不保留选中字段
                     dataSource2: res.data.rows,
                     // selectedRowKeys:[],
@@ -35,8 +30,9 @@ class ApplySuccess extends React.Component {
             }
         })
     };
+    //查看申请通过的详细信息
     handleSearch = () =>{
-
+        alert("申请通过的详细信息,未完待续。。。")
     }
 
     render() {

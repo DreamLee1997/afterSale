@@ -1,3 +1,4 @@
+/* 系统管理员左侧导航栏菜单 */
 const menuList = [
     {
         title:'首页',
